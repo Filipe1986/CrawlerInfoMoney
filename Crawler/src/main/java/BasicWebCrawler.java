@@ -1,7 +1,6 @@
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
+
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -15,35 +14,25 @@ public class BasicWebCrawler {
     }
 
     public void getPageLinks(String URL) {
-        //4. Check if you have already crawled the URLs
-        //(we are intentionally not checking for duplicate content in this example)
         if (!links.contains(URL)) {
             try {
-                //4. (i) If not add it to the index
+
                 if (links.add(URL)) {
-                    System.out.println(URL);
+                    System.out.println("URL: "+ URL);
                 }
-
-                //2. Fetch the HTML code
                 Document document = Jsoup.connect(URL).get();
-                System.out.println(document.getElementsByClass("col-12 col-lg-8 pt-3 pt-lg-0 d-flex justify-content-center flex-column"));
-                /*
-                //3. Parse the HTML to extract links to other URLs
-                Elements linksOnPage = document.select("a[href]");
+                
+                System.out.println("título: " 		+ document.getElementsByClass("page-title-1").text());
+                System.out.println("subtítulo: "	+ document.getElementsByClass("article-lead").text());
+                System.out.println("Autor: "		+ document.getElementsByClass("author-name").text());
+                System.out.println("Data: "			+ document.getElementsByClass("entry-date published").text());
+                System.out.println("Conteúdp: " 	+ document.getElementsByClass("article-content").text());
+                
 
-                //5. For each extracted URL... go back to Step 4.
-                for (Element page : linksOnPage) {
-                    getPageLinks(page.attr("abs:href"));
-                }*/
             } catch (IOException e) {
                 System.err.println("For '" + URL + "': " + e.getMessage());
             }
         }
-    }
-
-    public static void main(String[] args) {
-        //1. Pick a URL from the frontier
-        new BasicWebCrawler().getPageLinks("https://www.infomoney.com.br/mercados/");
     }
 
 }

@@ -8,26 +8,29 @@ import okhttp3.*;
 public class main {
 
 	public static void main(String[] args) throws IOException {
-		int numPages = 3;
-		String date = "21.08.20";
 
+		int numPages = 1;
 		String url = "www.infomoney.com.br/";
-		BasicWebCrawler bwc = new BasicWebCrawler();
+		String date = "21/08/20";
+		
+		
+		WebCrawler wc = new WebCrawler();
 
 		for (int i = 1; i < numPages + 1; i++) {
-			JSONArray infomoneylinksBypage = getInfomoneyLatestNewsPagelinks(url, date, i);
-			for (Object newslink : infomoneylinksBypage) {
-				bwc.getPageInfo(newslink.toString());
+			JSONArray infomoneylinksBypage = postInfomoneyLatestNewsPagelinks(url, date, i);
+			for (Object newsLink : infomoneylinksBypage) {
+				wc.getPageInfo(newsLink.toString());
 			}
 		}
 	}
 
-	private static JSONArray getInfomoneyLatestNewsPagelinks(String url, String date, int numPage) throws IOException {
+	private static JSONArray postInfomoneyLatestNewsPagelinks(String url, String date, int numPage) throws IOException {
+		
 		OkHttpClient client = new OkHttpClient().newBuilder().build();
 		MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded; charset=UTF-8");
-		String bodyContent = "action=infinite_scroll" + "&order=DESC" + "&page=" + numPage + "&currentday=" + date
-				+ "&query_args[category_name]=mercados";
+		String bodyContent = "action=infinite_scroll" + "&order=DESC" + "&page=" + numPage + "&currentday=" + date + "&query_args[category_name]=mercados";
 		RequestBody body = RequestBody.create(bodyContent, mediaType);
+		
 		Request request = new Request.Builder().url("https://" + url + "?infinity=scrolling").method("POST", body)
 				.addHeader("authority", url)
 				.addHeader("user-agent",

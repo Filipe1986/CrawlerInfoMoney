@@ -1,1 +1,5 @@
 /.metadata/
+.classpath
+.project
+Crawler/.settings/org.eclipse.jdt.core.prefs
+Crawler/.settings/org.eclipse.m2e.core.prefs

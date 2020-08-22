@@ -74,7 +74,6 @@ public class WebCrawler {
 	}
 	
 	private String formatAuthor(String author) {
-		
 		return author.replace("Por ", "");
 	}
 

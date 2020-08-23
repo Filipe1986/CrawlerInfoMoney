@@ -9,7 +9,7 @@ public class main {
 
 	public static void main(String[] args) throws IOException {
 
-		int numPages = 1;
+		int numPages = 3;
 		String url = "www.infomoney.com.br/";
 		String date = "21/08/20";
 		String categoria = "mercados";
